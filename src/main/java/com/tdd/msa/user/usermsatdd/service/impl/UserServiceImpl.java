@@ -16,9 +16,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserEntity> findAll() {
-        if (userRepository.findAll().isEmpty()){
+        List<UserEntity> userEntities=userRepository.findAll();
+        if (userEntities.isEmpty()){
             throw new EmptyListException("The list is empty");
         }
-        return userRepository.findAll();
+        return userEntities;
     }
 }
