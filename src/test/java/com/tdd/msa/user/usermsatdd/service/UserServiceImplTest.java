@@ -15,7 +15,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Arrays;
 import java.util.List;
 
+
+import static org.mockito.Mockito.verify;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -60,5 +63,27 @@ class UserServiceImplTest {
         //@Then
         //assertFalse(userEntities.isEmpty());
         assertThrows(EmptyListException.class, () -> userServiceImplMock.findAll());
+    }
+
+    @Test
+    @DisplayName("USI_CA3: When I call the createUser, it should save")
+    void testCreateUser() {
+        // Given
+        UserEntity user = new UserEntity();
+        user.setName("erobles");
+        user.setPhoneNumber("123456789");
+        user.setDirection("Urdenor");
+
+        //@When
+        when(userRepository.save(user)).thenReturn(user);
+
+        // Act
+        UserEntity createdUser = userServiceImplMock.createUser(user);
+
+        // Assert
+        assertEquals(user.getName(), createdUser.getName());
+        assertEquals(user.getPhoneNumber(), createdUser.getPhoneNumber());
+        assertEquals(user.getDirection(), createdUser.getDirection());
+        verify(userRepository, times(1)).save(user);
     }
 }
