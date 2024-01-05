@@ -22,4 +22,9 @@ public class UserServiceImpl implements UserService {
         }
         return userEntities;
     }
+
+    @Override
+    public UserEntity createUser(UserEntity user) {
+        return userRepository.save(user);
+    }
 }
